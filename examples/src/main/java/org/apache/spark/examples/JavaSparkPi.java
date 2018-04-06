@@ -31,9 +31,11 @@ import java.util.List;
 public final class JavaSparkPi {
 
   public static void main(String[] args) throws Exception {
+
     SparkSession spark = SparkSession
       .builder()
       .appName("JavaSparkPi")
+      .master("local[*]")
       .getOrCreate();
 
     JavaSparkContext jsc = new JavaSparkContext(spark.sparkContext());
@@ -47,6 +49,7 @@ public final class JavaSparkPi {
 
     JavaRDD<Integer> dataSet = jsc.parallelize(l, slices);
 
+    Integer num = 0;
     int count = dataSet.map(integer -> {
       double x = Math.random() * 2 - 1;
       double y = Math.random() * 2 - 1;
