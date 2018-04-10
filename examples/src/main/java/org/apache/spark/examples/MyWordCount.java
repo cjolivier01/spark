@@ -35,9 +35,9 @@ public class MyWordCount {
         SparkSession spark = CJUtil.getSession("MyWordCount");
         JavaRDD<String> textFile = spark.read().textFile(args[0]).javaRDD();
         JavaPairRDD<String, Integer> counts = textFile
-                .flatMap(s -> Arrays.asList(s.split(" ")).iterator())
-                .mapToPair(word -> new Tuple2<>(word, 1))
-                .reduceByKey((a, b) -> a + b);
+            .flatMap(s -> Arrays.asList(s.split(" ")).iterator())
+            .mapToPair(word -> new Tuple2<>(word, 1))
+            .reduceByKey((a, b) -> a + b);
         String outputFileName = "/tmp/spark_output.txt";
         File fout = new File(outputFileName);
         fout.delete();
